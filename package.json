@@ -1,0 +1,29 @@
+{
+  "name": "scripty-backend",
+  "version": "1.0.0",
+  "description": "Scripty backend",
+  "main": "index.js",
+  "scripts": {
+    "serve": "nodemon --exec babel-node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adishadzic/scripty-backend.git"
+  },
+  "author": "Adis Hadžić & Domagoj Kuveždić",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adishadzic/scripty-backend/issues"
+  },
+  "homepage": "https://github.com/adishadzic/scripty-backend#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.16",
+    "@babel/node": "^7.13.13",
+    "@babel/preset-env": "^7.13.15",
+    "nodemon": "^2.0.7"
+  }
+}

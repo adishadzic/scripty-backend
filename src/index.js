@@ -1,15 +1,19 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import cors from 'cors';
+dotenv.config();
 
-require('dotenv').config();
+const AuthRoute = require('./routes/authRoute');
 
 const app = express();
 const port = 3000;
 
+app.use(cors());
 app.use(express.json());
 
-const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, {
+const connectionString = process.env.ATLAS_URI;
+mongoose.connect(connectionString, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
@@ -19,12 +23,8 @@ connection.once('open', () => {
   console.log('MongoDB database connection established successfully');
 });
 
-const AuthRoute = require('./routes/authRoute');
-
 app.get('/', (req, res) => res.send('Hello World'));
 
 app.use('/auth', AuthRoute);
 
-app.listen(port, () =>
-  console.log(`Server running on port: http://localhost:${port}`)
-);
+app.listen(port, () => console.log(`Server running on port: http://localhost:${port}`));

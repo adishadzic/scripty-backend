@@ -2,9 +2,11 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
+const auth = require('./routes/auth');
 dotenv.config();
 
 const AuthRoute = require('./routes/authRoute');
+const verifyToken = require('./middleware/verifyToken');
 
 const app = express();
 const port = 3000;

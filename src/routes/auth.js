@@ -51,7 +51,24 @@ const login = async (req, res) => {
     },
     process.env.JWT_SECRET
   );
-  res.send(token);
+  res.json({ token: token, email: user.email });
 };
 
-module.exports = { register, login };
+const changeUserPassword = async (email, old_password, new_password) => {
+  const user = await User.findOne({ email: req.body.email });
+  if (user && user.password && (await bcrypt.compare(old_password, user.password))) {
+    let new_password_hashed = await bcrypt.hash(new_password, 8);
+
+    let result = await db.collection('users').updateOne(
+      { _id: user._id },
+      {
+        $set: {
+          password: new_password_hashed,
+        },
+      }
+    );
+    return result.modifiedCount == 1;
+  }
+};
+
+module.exports = { register, login, changeUserPassword };

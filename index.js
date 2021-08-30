@@ -1,7 +1,7 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import cors from 'cors';
+const express = require('express');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const cors = require('cors');
 const auth = require('./src/routes/auth');
 dotenv.config();
 
@@ -25,7 +25,7 @@ connection.once('open', () => {
   console.log('MongoDB database connection established successfully');
 });
 
-app.get('/test', (req, res) => res.send('Hello World'));
+app.get('/', (req, res) => res.send('Hello World'));
 
 app.use('/auth', AuthRoute);
 

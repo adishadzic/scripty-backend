@@ -2,11 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const auth = require('./src/routes/auth');
+const auth = require('./routes/auth');
 dotenv.config();
 
-const AuthRoute = require('./src/routes/authRoute');
-const verifyToken = require('./src/middleware/verifyToken');
+const AuthRoute = require('./routes/authRoute');
+const verifyToken = require('./middleware/verifyToken');
 
 const app = express();
 const port = 3000;
@@ -30,4 +30,4 @@ app.get('/', (req, res) => res.send('Hello World'));
 
 app.use('/auth', AuthRoute);
 
-app.listen(port, () => console.log(`Server running on port: http://localhost:${port}`));
+app.listen(process.env.PORT || port, () => console.log(`Server running on port: http://localhost:${port}`));

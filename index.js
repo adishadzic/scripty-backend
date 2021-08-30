@@ -2,11 +2,11 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
-const auth = require('./routes/auth');
+const auth = require('./src/routes/auth');
 dotenv.config();
 
-const AuthRoute = require('./routes/authRoute');
-const verifyToken = require('./middleware/verifyToken');
+const AuthRoute = require('./src/routes/authRoute');
+const verifyToken = require('./src/middleware/verifyToken');
 
 const app = express();
 const port = 3000;
@@ -25,7 +25,7 @@ connection.once('open', () => {
   console.log('MongoDB database connection established successfully');
 });
 
-app.get('/', (req, res) => res.send('Hello World'));
+app.get('/test', (req, res) => res.send('Hello World'));
 
 app.use('/auth', AuthRoute);
 

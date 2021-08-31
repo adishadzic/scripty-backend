@@ -44,31 +44,17 @@ const login = async (req, res) => {
   if (!validPass) {
     return res.status(400).send('Invalid password');
   }
-
-  const token = jwt.sign(
-    {
-      _id: user._id,
-    },
-    process.env.JWT_SECRET
-  );
-  res.json({ token: token, email: user.email });
-};
-
-const changeUserPassword = async (email, old_password, new_password) => {
-  const user = await User.findOne({ email: req.body.email });
-  if (user && user.password && (await bcrypt.compare(old_password, user.password))) {
-    let new_password_hashed = await bcrypt.hash(new_password, 8);
-
-    let result = await db.collection('users').updateOne(
-      { _id: user._id },
+  try {
+    const token = jwt.sign(
       {
-        $set: {
-          password: new_password_hashed,
-        },
-      }
+        _id: user._id,
+      },
+      process.env.JWT_SECRET
     );
-    return result.modifiedCount == 1;
+    res.json({ token: token, email: user.email });
+  } catch (error) {
+    res.status(400).send(err);
   }
 };
 
-module.exports = { register, login, changeUserPassword };
+module.exports = { register, login };

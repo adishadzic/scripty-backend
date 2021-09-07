@@ -2,12 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
-// const auth = require('./routes/auth');
 dotenv.config();
 
 const AuthRoute = require('./routes/authRoute');
 const Post = require('./models/PostModel');
-// const verifyToken = require('./middleware/verifyToken');
+const Comment = require('./models/CommentModel');
 const Posts = require('./routes/posts');
 
 const app = express();
@@ -70,7 +69,6 @@ app.get('/scripts', async (req, res) => {
   try {
     let selection = {};
     if (query._any) {
-      // kompozitni upiti
       let pretraga = query._any;
       let terms = pretraga.split(' ');
       let atributi = ['scriptName', 'university'];
@@ -90,12 +88,49 @@ app.get('/scripts', async (req, res) => {
       });
     }
 
-    console.log(selection);
     const cursor = await Post.collection.find(selection);
     const results = await cursor.toArray();
     res.json(results);
   } catch (error) {
     return res.status(401).json({ error: error.message });
+  }
+});
+
+app.get('/comments/:scriptId', async (req, res) => {
+  let scriptId = req.params.scriptId;
+
+  let result = await Comment.collection.find({ scriptId: scriptId });
+  let cursor = await result.toArray();
+  res.json(cursor);
+});
+
+app.post('/comment', async (req, res) => {
+  let data = req.body;
+
+  delete data._id;
+
+  let result = await Comment.collection.insertOne(data);
+
+  if (result && result.insertedCount == 1) {
+    res.json(result.ops[0]);
+  } else {
+    res.json({
+      status: 'Something went left',
+    });
+  }
+});
+
+app.post('/delete/:comment', async (req, res) => {
+  let commentId = req.params.comment;
+  console.log(commentId);
+
+  let result = await Comment.collection.deleteOne({ comment: commentId });
+  if (result && result.deletedCount == 1) {
+    res.json(result);
+  } else {
+    res.status(500).json({
+      status: 'Something went left',
+    });
   }
 });
 

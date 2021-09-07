@@ -29,6 +29,10 @@ connection.once('open', () => {
   console.log('MongoDB database connection established successfully');
 });
 
+app.get('/test', (req, res) => {
+  res.send('Hello ');
+});
+
 app.use('/auth', AuthRoute);
 
 app.post('/upload', async (req, res) => {

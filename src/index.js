@@ -2,13 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const auth = require('./routes/auth');
+// const auth = require('./routes/auth');
 dotenv.config();
 
 const AuthRoute = require('./routes/authRoute');
 const Post = require('./models/PostModel');
-const verifyToken = require('./middleware/verifyToken');
-import { query } from 'express';
+// const verifyToken = require('./middleware/verifyToken');
 import Posts from './routes/posts';
 
 const app = express();

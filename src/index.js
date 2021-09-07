@@ -8,7 +8,7 @@ dotenv.config();
 const AuthRoute = require('./routes/authRoute');
 const Post = require('./models/PostModel');
 // const verifyToken = require('./middleware/verifyToken');
-import Posts from './routes/posts';
+const Posts = require('./routes/posts');
 
 const app = express();
 const port = 4000;
